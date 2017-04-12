@@ -1,13 +1,14 @@
 import re
 import csv
 import nltk
-
+import os
 
 class filterTweets:
-    def __init__(self):
+    def __init__(self,filename = 'alltweets.csv'):
         self.featureList = []
         self.stopWords = []
         self.tweets = []
+        self.filename = filename
         
     def replaceTwoOrMore(self,s):
         pattern = re.compile(r"(.)\1{1,}", re.DOTALL)
@@ -55,7 +56,7 @@ class filterTweets:
         return features
 
     def getFeatureList(self):
-        inpTweets = csv.reader(open('data/CSV/alltweets.csv','rb'),delimiter=',',quotechar='|')
+        inpTweets = csv.reader(open(os.path.join('data','CSV',self.filename),'rb'),delimiter=',',quotechar='|')
         self.stopWords = self.getStopWordList('stopwords.txt')
         for row in inpTweets:
             category = row[0]
@@ -66,7 +67,7 @@ class filterTweets:
 
     def getSVMFeatures(self):
         self.getFeatureList()
-        sortedFeatures = sorted(self.featureList)
+        sortedFeatures = set(sorted(self.featureList))
         map = {}
         feature_vector = []
         labels = []
@@ -90,11 +91,11 @@ class filterTweets:
             #end for loop
             values = map.values()
             feature_vector.append(values)
-            if(tweet_opinion == 'positive'):
+            if(tweet_opinion == 'music'):
                 label = 0
-            elif(tweet_opinion == 'negative'):
+            elif(tweet_opinion == 'sports'):
                 label = 1
-            elif(tweet_opinion == 'neutral'):
+            elif(tweet_opinion == 'politics'):
                 label = 2
             labels.append(label)
         #return the list of feature_vector and labels
