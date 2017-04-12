@@ -11,7 +11,7 @@ problem = svm_problem(result['labels'], result['feature_vector'])
 param = svm_parameter('-q')
 param.kernel_type = LINEAR
 classifier = svm_train(problem, param)
-svm_save_model(classifierDumpFile, classifier)
+#svm_save_model(classifierDumpFile, classifier)
 
 #Test the classifier
 test_feature_vector = testOb.getSVMFeatures()['feature_vector']

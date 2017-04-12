@@ -71,7 +71,7 @@ class filterTweets:
         map = {}
         feature_vector = []
         labels = []
-        for t in tweets:
+        for t in self.tweets:
             label = 0
             map = {}
             #Initialize empty map
@@ -83,7 +83,7 @@ class filterTweets:
             #Fill the map
             for word in tweet_words:
                 #process the word (remove repetitions and punctuations)
-                word = replaceTwoOrMore(word)
+                word = self.replaceTwoOrMore(word)
                 word = word.strip('\'"?,.')
                 #set map[word] to 1 if word exists
                 if word in map:
